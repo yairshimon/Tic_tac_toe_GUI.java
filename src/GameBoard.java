@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameBoard extends JPanel {
 
@@ -8,7 +9,10 @@ public class GameBoard extends JPanel {
 
     private final ArrayList<ArrayList<Square>> boardData;
 
+    private int o = 1;
+
     public GameBoard () {
+        A a = new A();
         this.setBackground(Color.BLUE);
         GridLayout gridLayout = new GridLayout(BOARD_LENGTH, BOARD_LENGTH);
         this.setLayout(gridLayout);
@@ -20,18 +24,33 @@ public class GameBoard extends JPanel {
                 Square square = new Square(
                         Color.WHITE,
                         player);
+                final int[] g = {0};
                 square.addActionListener((event) -> {
-                    square.setPlayer(Player.blue);
-                    System.out.println(checkWinDiagonal());
-                    System.out.println(checkWinRows());
-                    System.out.println(checkWinColumns());
-                    repaint();
+                    if(square.getPlayer() == Player.none) {
+                        if(a.i == 0){
+                            square.setPlayer(Player.blue);
+                            a.plus();
+                        }else {
+                            square.setPlayer(Player.red);
+                            a.minus();
+                        }
+                        if(checkWinDiagonal() || checkWinRows() || checkWinColumns()){
 
+                        }
+                        repaint();
+                    }
                 });
                 this.add(square);
                 currentRow.add(square);
             }
             this.boardData.add(currentRow);
+        }
+    }
+    public Player sl(){
+        if(o == 1){
+            return Player.blue;
+        }else {
+            return Player.red;
         }
     }
     public boolean checkWinDiagonal() {

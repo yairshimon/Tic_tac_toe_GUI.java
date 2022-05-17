@@ -4,10 +4,12 @@ import java.awt.*;
 public class Square extends JButton {
     private Color color;
     private Player player;
+    public int i ;
 
     public Square (Color color, Player player) {
         this.color = color;
         this.player = player;
+        i = 1;
     }
     public void copy (Square square) {
        this.color = square.color;
