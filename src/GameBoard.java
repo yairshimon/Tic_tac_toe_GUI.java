@@ -35,14 +35,19 @@ public class GameBoard extends JPanel {
                             square.setPlayer(Player.red);
                             minus();
                         }
-                        if(checkWinDiagonal() || checkWinRows() || checkWinColumns()){
-                          new Answer(i);
-                            for (int i = 0; i < 3; i++) {
-                                for (int z = 0; z < 3; z++) {
-                                    boardData.get(i).get(z).setPlayer(Player.none);
-                                }
+                        int q = 0;
+                        for (int i = 0; i < 3; i++) {
+                            for (int z = 0; z < 3; z++) {
+                                if(boardData.get(i).get(z).getPlayer() !=Player.none) q++;
                             }
-
+                        }
+                        if (q == 9){
+                            new Answer(i,"NO WINNER");
+                            initBoard();
+                        }
+                        if(checkWinDiagonal() || checkWinRows() || checkWinColumns()){
+                          new Answer(i,"null");
+                          initBoard();
                         }
                         repaint();
                     }
@@ -53,6 +58,14 @@ public class GameBoard extends JPanel {
             this.boardData.add(currentRow);
         }
     }
+    public void initBoard(){
+        for (int i = 0; i < 3; i++) {
+            for (int z = 0; z < 3; z++) {
+                boardData.get(i).get(z).setPlayer(Player.none);
+            }
+        }
+    }
+
     public boolean checkWinDiagonal() {
         if (!boardData.isEmpty()) {
             if (boardData.get(1).get(1).getPlayer() == Player.none) return false;
@@ -90,5 +103,4 @@ public class GameBoard extends JPanel {
          }
          return c == 3 && player != Player.none;
      }
-
 }
