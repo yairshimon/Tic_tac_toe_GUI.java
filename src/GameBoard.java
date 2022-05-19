@@ -1,18 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameBoard extends JPanel {
 
     public static final int BOARD_LENGTH = 3;
 
     private final ArrayList<ArrayList<Square>> boardData;
-
-    private int o = 1;
-
+    public int i = 0;
+    public void plus(){
+        i ++;
+    }
+    public void minus(){
+        i --;
+    }
     public GameBoard () {
-        A a = new A();
         this.setBackground(Color.BLUE);
         GridLayout gridLayout = new GridLayout(BOARD_LENGTH, BOARD_LENGTH);
         this.setLayout(gridLayout);
@@ -24,17 +26,22 @@ public class GameBoard extends JPanel {
                 Square square = new Square(
                         Color.WHITE,
                         player);
-                final int[] g = {0};
                 square.addActionListener((event) -> {
                     if(square.getPlayer() == Player.none) {
-                        if(a.i == 0){
+                        if(i == 0){
                             square.setPlayer(Player.blue);
-                            a.plus();
+                            plus();
                         }else {
                             square.setPlayer(Player.red);
-                            a.minus();
+                            minus();
                         }
                         if(checkWinDiagonal() || checkWinRows() || checkWinColumns()){
+                          new Answer(i);
+                            for (int i = 0; i < 3; i++) {
+                                for (int z = 0; z < 3; z++) {
+                                    boardData.get(i).get(z).setPlayer(Player.none);
+                                }
+                            }
 
                         }
                         repaint();
@@ -44,13 +51,6 @@ public class GameBoard extends JPanel {
                 currentRow.add(square);
             }
             this.boardData.add(currentRow);
-        }
-    }
-    public Player sl(){
-        if(o == 1){
-            return Player.blue;
-        }else {
-            return Player.red;
         }
     }
     public boolean checkWinDiagonal() {

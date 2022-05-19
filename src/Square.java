@@ -2,26 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Square extends JButton {
-    private Color color;
+    private final Color color;
     private Player player;
-    public int i ;
 
     public Square (Color color, Player player) {
         this.color = color;
         this.player = player;
-        i = 1;
-    }
-    public void copy (Square square) {
-       this.color = square.color;
-        this.player = square.player;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public Player getPlayer() {
@@ -51,9 +37,5 @@ public class Square extends JButton {
                 break;
 
         }
-    }
-
-    public boolean isNonePlayer() {
-        return this.player.equals(Player.none);
     }
 }
